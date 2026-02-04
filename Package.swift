@@ -4,8 +4,11 @@
 import PackageDescription
 
 let package = Package(
+    
+
     name: "SwiftPlayground",
     targets: [
+        
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .executableTarget(
@@ -13,3 +16,12 @@ let package = Package(
         ),
     ]
 )
+// Hello again
+print ("hello world") 
+let roomLength = 6.0
+let roomWidth = 4.5
+let roomHeight = 2.7
+let TechArea = (roomLength) * (roomWidth)
+print ("The room is \(TechArea)m2")
+print("The room is also \(TechArea * roomHeight)m3")
+print ("How big is your room?")
