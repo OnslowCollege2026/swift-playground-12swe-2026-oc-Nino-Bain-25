@@ -25,18 +25,31 @@ func printUnitNotes() {
 func printGoodbye() {
     print("Done. Thanks for using the calculator.")
 }
+///Parameters: 
+/// length: The length of the room in m3
+/// Width:The width of the school in m3
+/// Height: NO REALLY
 func roomVolume(length: Double, Width:Double, Height: Double) -> Double {
     ///Shouldve used three slashes in the example.
     return length * Width * Height
 }
-
+///Parameters:
+/// Length: the length of the room in m3
+/// Width: The width of the room in m3
 func printArea(length: Double, Width: Double) -> Double {
     ///Calculates area
     return length * Width
 }
+/// Checks the size of the room
+/// Parametre: The Volume of the room in m3
+/// Returns: true or false depending on if the room is smaller or larger than 60.
 func isRoomSmall(volume: Double) -> Bool {
     return volume < 60
 }
+///The parametre is a percentage, and it returns a number in metres, which is reduced from the original number.
+/// Parametres:
+/// Original: The OG size in metres
+/// reductionPercentage: a percentage that the original size will be reduced by
 func reducedHeight(original: Double, reductionPercentage: Double) -> Double {
     let multiplier = (100 - reductionPercentage) / 100
     return original * multiplier
