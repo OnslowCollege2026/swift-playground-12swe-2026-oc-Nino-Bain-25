@@ -1,103 +1,67 @@
 // The Swift Programming Language
 // https://docs.swift.org/swift-book
 
+///Prints a bunch of stuff for me, for the menu to use.
+func printMenu() {
+    print("===Egg Shop===")
+    print("1. Add eggs")
+    print("2. Sell eggs")
+    print("3. Show current stock")
+    print("4. Show total eggs sold")
+    print("5. Finish")
+    print("6. Play Blackjack")
+}
+
+///This function takes the user input in the form of a number.
+func menuChoice() -> Int{
+    var menuReturn = 0
+if let UserInput = readLine(), let userDecision = Int(UserInput) {
+menuReturn = userDecision
+}
+return menuReturn
+}
 
 
-func readNumber(prompt: String) -> Double {
-    
-var returnValue = -1.0
-guard let UserInputHeight = readLine() , let Number = Double(UserInputHeight) else {
-    print("Invalid number")
-    return readNumber(prompt: prompt)
-}
-returnValue = Number
-return returnValue
-}
-func showWelcome() {
-    print("This program calculates room area and volume")
-}
-func printdivider() {
-    print("--------")
-}
-func printUnitNotes() {
-    print("All measurements are in metres")
-}
-func printGoodbye() {
-    print("Done. Thanks for using the calculator.")
-}
-///Parameters: 
-/// length: The length of the room in m3
-/// Width:The width of the school in m3
-/// Height: NO REALLY
-func roomVolume(length: Double, Width:Double, Height: Double) -> Double {
-    ///Shouldve used three slashes in the example.
-    return length * Width * Height
-}
-///Parameters:
-/// Length: the length of the room in m3
-/// Width: The width of the room in m3
-func printArea(length: Double, Width: Double) -> Double {
-    ///Calculates area
-    return length * Width
-}
-/// Checks the size of the room
-/// Parametre: The Volume of the room in m3
-/// Returns: true or false depending on if the room is smaller or larger than 60.
-func isRoomSmall(volume: Double) -> Bool {
-    return volume < 60
-}
-///The parametre is a percentage, and it returns a number in metres, which is reduced from the original number.
-/// Parametres:
-/// Original: The OG size in metres
-/// reductionPercentage: a percentage that the original size will be reduced by
-func reducedHeight(original: Double, reductionPercentage: Double) -> Double {
-    let multiplier = (100 - reductionPercentage) / 100
-    return original * multiplier
-}
+
 @main
 
 struct SwiftPlayground {
 static func main() {
-        
-        // Part 1 
-        showWelcome()
-//Constants for tech room right now
-let roomLength = 6.0
-let roomWidth = 4.5
-let roomHeight = 2.7
-let TechArea = printArea(length: roomLength, Width: roomWidth)
+    //The maximum amount of eggs, and the amount of eggs currently in stock.
+let eggMaxing = 500
+var eggStock = 20
+var eggsSold = 0
 
-//Prints room size
-print ("The room is \(TechArea)m2")
-print("The room is also \(TechArea * roomHeight)m3")
 
-//Part 2
-//Asks user how big the room they are calculating is
-print ("Please enter the rooms height, length and width.")
-printUnitNotes()
-if let UserInputHeight = readLine() , let UserRoomHeight = Double(UserInputHeight) {
-    if let UserInputLength = readLine(), let UserRoomLength = Double(UserInputLength) {
-        if let UserInputWidth = readLine(), let UserRoomWidth = Double(UserInputWidth) {
-            let UserRoomVolume = UserRoomHeight * UserRoomLength * UserRoomWidth
-            
-            //Tells you the end result
-            printdivider()
-            print("Summary")
-            printdivider()
-            print("Your room has a volume of \(UserRoomVolume)m3")
-        }
+//While menuRunning is = 1, the menu runs, keeping the program on.
+var menuRunning = 1
+while menuRunning == 1 {
+    printMenu()
+let UserInput = menuChoice()
+if UserInput < 1 {
+    print("Please enter a number from 1-6")
+} else if UserInput > 6 {
+    print("Please enter a number from 1-6")
+} else {
+    print("INVALID NUMBER! TRY AGAIN")
+}
+if UserInput == 5 {
+    print("Goodbye, have a nice day.")
+    menuRunning = 0
     }
+else if UserInput == 1 {
+    print("Please choose an amount of eggs to add.")
+    
+}
+//eggs Im sellin.
+else if UserInput == 2 {
+print("Please choose an amount of eggs to sell")
+let Input = menuChoice()
+if Input > -1 && Input <= eggStock {}
+}
 }
 
-    }
+}
 
 
-
-
-} 
-
-
-
-
-
-    
+}
