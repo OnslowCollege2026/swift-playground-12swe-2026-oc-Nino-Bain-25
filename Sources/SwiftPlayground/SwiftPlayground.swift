@@ -1,12 +1,6 @@
 // The Swift Programming Language
 // https://docs.swift.org/swift-book
 
-@main
-struct SwiftPlayground {
-    static func main() {
-// The Swift Programming Language
-// https://docs.swift.org/swift-book
-
 ///Prints a bunch of stuff for me, for the menu to use.
 func printMenu() {
     print("===Egg Shop===")
