@@ -30,8 +30,10 @@ struct SwiftPlayground {
 static func main() {
     //The maximum amount of eggs, and the amount of eggs currently in stock.
 let eggMaxing = 500
-var eggStock = 20
-var eggsSold = 0
+let BaseStock = 20
+let BaseSold = 0
+var eggStock = BaseStock
+var eggsSold = BaseSold
 
 
 //While menuRunning is = 1, the menu runs, keeping the program on.
@@ -116,10 +118,9 @@ for cards in fullDeck {
 playDeck.append(cards)
 }
 playDeck.remove(at: 1)
-var playerHand = [""]
+let playerHand = [""]
 for numbers in 1...2 {
-playerHand.append("\(fullDeck.randomElement())")
-playDeck.removeAll(playerHand)
+print(playerHand, numbers)
 }
 } 
 
