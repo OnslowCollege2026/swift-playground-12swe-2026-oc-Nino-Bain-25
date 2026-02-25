@@ -10,123 +10,129 @@ func printMenu() {
     print("4. Show total eggs sold")
     print("5. Finish")
     print("6. Refresh shop")
-    print("7. Play Blackjack")
 }
 
 ///This function takes the user input in the form of a number.
-func menuChoice() -> Int{
+func menuChoice() -> Int {
     var menuReturn = 0
-if let UserInput = readLine(), let userDecision = Int(UserInput) {
-menuReturn = userDecision
+    if let UserInput = readLine(), let userDecision = Int(UserInput) {
+        menuReturn = userDecision
+    }
+    return menuReturn
 }
-return menuReturn
+
+///Shows the amount of eggs the user has sold, with different messages depending on how many they have sold.
+/// Parametres:
+/// EggSold: The amount of eggs the user has sold
+/// EggStock: The amount of eggs left in stock.
+func showStats(eggStock: Int, eggSold: Int) {
+    if eggSold > 0 && eggSold <= 500 && eggStock > 0 {
+        print("You have sold a total of \(eggSold) eggs!")
+    } else if eggSold == 0 {
+        print("You have not sold any eggs")
+    } else if eggStock == 0 {
+        print("You sold our whole stock of \(eggSold) eggs! Good job.")
+    } else if eggSold >= 500 {
+        print("Woah, you sold a whopping total of \(eggSold) eggs!")
+    } else {
+        print("Wait what?")
+    }
+
 }
 
+///Adds eggs to the stock
+/// Parametres:
+/// eggStock: the amount of eggs left in stock
+/// eggMaxing: the maximum amount of eggs the stock can have.
+func addEggs(eggStock: Int, eggMaxing: Int) -> Int {
+    print("Please choose an amount of eggs to add to stock.")
+    let Input = menuChoice()
+    if Input + eggStock <= eggMaxing {
+        print("\(Input) eggs added to stock.")
+        return Input
+    } else if Input == 0 {
+        print("No eggs added. What were you EGGspecting")
+        return 0
+    } else if Input < 0 {
+        print("Invalid number of eggs. If you want them gone, then go sell em!")
+        return 0
+    } else {
+        print(
+            "Maximum limit of eggs in stock is \(eggMaxing). Please enter a number that does not exceed the limit."
+        )
+        return 0
+    }
 
+}
+///Sells eggs (Mostly checks if the eggs break any limits, and print different messages if they do.)
+/// parametre: eggStock: the amount of eggs in stock.
+func sellEggs(eggStock: Int) -> Int {
+    let Input = menuChoice()
+    if Input > -1 && Input <= eggStock {
+        print("You have sold \(Input) eggs. Well done!.")
+        return Input
 
+    } else if Input < -1 {
+        print("Invalid number of eggs.")
+        return 0
+    } else if Input > eggStock {
+        print("Not enough eggs in stock")
+        return 0
+    } else {
+        return 0
+    }
+}
 @main
 
 struct SwiftPlayground {
-static func main() {
-    //The maximum amount of eggs, and the amount of eggs currently in stock.
-let eggMaxing = 500
-let BaseStock = 20
-let BaseSold = 0
-var eggStock = BaseStock
-var eggsSold = BaseSold
+    static func main() {
+        //The maximum amount of eggs, and the amount of eggs currently in stock.
+        let eggMaxing = 500
+        let BaseStock = 20
+        let BaseSold = 0
+        var eggStock = BaseStock
+        var eggsSold = BaseSold
 
+        //While menuRunning is = 1, the menu runs, keeping the program on.
+        var menuRunning = 1
+        while menuRunning == 1 {
+            printMenu()
+            let UserInput = menuChoice()
+            if UserInput < 1 {
+                print("Please enter a number from 1-6")
+            } else if UserInput > 6 {
+                print("Please enter a number from 1-6")
+            }
+            if UserInput == 5 {
+                print("Goodbye, have a nice day.")
+                menuRunning = 0
+            }
 
-//While menuRunning is = 1, the menu runs, keeping the program on.
-var menuRunning = 1
-while menuRunning == 1 {
-    printMenu()
-let UserInput = menuChoice()
-if UserInput < 1 {
-    print("Please enter a number from 1-6")
-} else if UserInput > 6 {
-    print("Please enter a number from 1-6")
-} 
-if UserInput == 5 {
-    print("Goodbye, have a nice day.")
-    menuRunning = 0
+            //Adds eggs to the stock. Will not add eggs if it exceeds the egg limit.
+            else if UserInput == 1 {
+                eggStock = addEggs(eggStock: eggStock, eggMaxing: eggMaxing) + eggStock
+            }
+            //eggs Im sellin.
+            else if UserInput == 2 {
+                print("Please choose an amount of eggs to sell")
+                let Input = sellEggs(eggStock: eggStock)
+                eggsSold = eggsSold + Input
+                eggStock = eggStock - Input
+            }
+            //Shows how many eggs there are in stock.
+            else if UserInput == 3 {
+                print("There are \(eggStock) eggs in stock.")
+            }/*Shows how many eggs have been sold. If the stock is empty, if the number of eggs sold is above 500,
+            or no eggs have been sold, it gives a unique response.*/
+            else if UserInput == 4 {
+                showStats(eggStock: eggStock, eggSold: eggsSold)
+            } else if UserInput == 6 {
+                eggsSold = BaseSold
+                eggStock = BaseStock
+                print("Shop refreshed.")
+            }
+
+        }
     }
-
-    //Adds eggs to the stock. Will not add eggs if it exceeds the egg limit.
-else if UserInput == 1 {
-    print("Please choose an amount of eggs to add to stock.")
-    let Input = menuChoice() 
-    if Input + eggStock < eggMaxing {
-eggStock = Input + eggStock
-    } else if Input == 0{
-print("No eggs added. What were you EGGspecting")
-    } else if Input < 0 {
-        print("Invalid number of eggs. If you want them gone, then go sell em!")
-    }
-    else {
-        print("Maximum limit of eggs in stock is \(eggMaxing). Please enter a number that does not exceed the limit.")
-    }
-}
-//eggs Im sellin.
-else if UserInput == 2 {
-print("Please choose an amount of eggs to sell")
-let Input = menuChoice()
-if Input > -1 && Input <= eggStock {
-    eggsSold = eggsSold + eggStock
-    eggStock = eggStock - Input
-    print("You have sold \(Input) eggs. Well done!.")
-}
-}
-//Shows how many eggs there are in stock.
-else if UserInput == 3 {
-    print("There are \(eggStock) eggs in stock.")
-} 
-/*Shows how many eggs have been sold. If the stock is empty, if the number of eggs sold is above 500, 
-or no eggs have been sold, it gives a unique response.*/
-else if UserInput == 4 {
-    if eggsSold > 0 {
-    print("You have sold a total of \(eggsSold) eggs.")}
-    else if eggStock == 0 {
-        print("Wow, you sold all \(eggsSold) eggs! good job.")
-    }
-    else if eggsSold < 500 {
-        print("You sold a whopping \(eggsSold)! great job!")
-    }
-    else {
-        print("You haven't sold anything yet! sell something first please.")
-    }
-} else if UserInput == 6 {
-    eggsSold = 0
-    eggStock = 500
-    print("Shop refreshed.")} 
-    
-    
-    
-    //So I was a little bored and am programming blackjack. Is this more or less impressive than the eggs?
-    else if UserInput == 7 {
-print("Feature is unfinished. GIMME A MOMENT.")
-
-var fullDeck = ["Joker"] 
-let suits = ["Hearts", "Diamonds", "Spades", "Clubs"]
-let cardNumbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "King", "Queen", "Jack"]
-for words in suits {
-    for numbers in cardNumbers{
-fullDeck.append("\(numbers) of \(words)")
-}}
-fullDeck.remove(at: 1)
-var playDeck = [""]
-for cards in fullDeck {
-playDeck.append(cards)
-}
-playDeck.remove(at: 1)
-let playerHand = [""]
-for numbers in 1...2 {
-print(playerHand, numbers)
-}
-} 
-
-}
-
-}
-
 
 }
