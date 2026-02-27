@@ -100,7 +100,7 @@ struct SwiftPlayground {
             let UserInput = menuChoice()
             if UserInput < 1 {
                 print("Please enter a number from 1-6")
-            } else if UserInput > 6 {
+            } else if UserInput > 7 {
                 print("Please enter a number from 1-6")
             }
             if UserInput == 5 {
@@ -131,8 +131,109 @@ struct SwiftPlayground {
                 eggStock = BaseStock
                 print("Shop refreshed.")
             }
+else if UserInput == 7 {
+print("Playing Blackjack")
+let suitTypes = ["Spades", "Hearts", "Diamonds", "Clubs"]
+let numbers = ["Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"]
+var BaseDeck: [String] = []
+suitTypes.forEach {Card in 
+numbers.forEach {Number in
+BaseDeck.append("\(Number) of \(Card)")
+}
+}
+var PlayerHand: [String] = []
+PlayerHand.append(BaseDeck.randomElement()!)
+var CardToRemove = PlayerHand[0]
+BaseDeck.enumerated().forEach {index, card in
+if card == CardToRemove {
+    BaseDeck.remove(at: index)
+}
+}
 
+PlayerHand.append(BaseDeck.randomElement()!)
+CardToRemove = PlayerHand[1]
+
+BaseDeck.enumerated().forEach {index, card in
+if card == CardToRemove {
+    BaseDeck.remove(at: index)
+print(PlayerHand.joined(separator: ", "))
+}
+
+}
+var HandScore = 0
+if PlayerHand[0].contains("2") {
+HandScore = HandScore + 2
+}
+if PlayerHand[0].contains("3") {
+HandScore = HandScore + 3
+}
+if PlayerHand[0].contains("4") {
+HandScore = HandScore + 4
+}
+if PlayerHand[0].contains("5") {
+HandScore = HandScore + 5
+}
+if PlayerHand[0].contains("6") {
+HandScore = HandScore + 6
+}
+if PlayerHand[0].contains("7") {
+HandScore = HandScore + 7
+}
+if PlayerHand[0].contains("8") {
+HandScore = HandScore + 8
+}
+if PlayerHand[0].contains("9") {
+HandScore = HandScore + 9
+}
+if PlayerHand[0].contains("10") || PlayerHand[0].contains("Jack") || PlayerHand[0].contains("Queen") || PlayerHand[0].contains("King") {
+HandScore = HandScore + 10
+}
+if PlayerHand[1].contains("2") {
+HandScore = HandScore + 2
+}
+if PlayerHand[1].contains("3") {
+HandScore = HandScore + 3
+}
+if PlayerHand[1].contains("4") {
+HandScore = HandScore + 4
+}
+if PlayerHand[1].contains("5") {
+HandScore = HandScore + 5
+}
+if PlayerHand[1].contains("6") {
+HandScore = HandScore + 6
+}
+if PlayerHand[1].contains("7") {
+HandScore = HandScore + 7
+}
+if PlayerHand[1].contains("8") {
+HandScore = HandScore + 8
+}
+if PlayerHand[1].contains("9") {
+HandScore = HandScore + 9
+}
+if PlayerHand[1].contains("10") || PlayerHand[0].contains("Jack") || PlayerHand[0].contains("Queen") || PlayerHand[0].contains("King") {
+HandScore = HandScore + 10
+}
+if PlayerHand[0].contains("Ace") {
+    if HandScore + 11 > 21 {
+        HandScore = HandScore + 1
+    } else {
+        HandScore = HandScore + 11
+    }
+}
+if PlayerHand[1].contains("Ace") {
+    if HandScore + 11 > 21 {
+        HandScore = HandScore + 1
+    } else {
+        HandScore = HandScore + 11
+    }
+}
+print("Your hand is currently worth: \(HandScore)")
+print("Would you like to get another card?")
         }
+
     }
 
+    }
 }
