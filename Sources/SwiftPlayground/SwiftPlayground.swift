@@ -230,7 +230,14 @@ if PlayerHand[1].contains("Ace") {
     }
 }
 print("Your hand is currently worth: \(HandScore)")
-print("Would you like to get another card?")
+print("Would you like to get another card? (Y/N)")
+if let userResponse = readLine() {
+    if userResponse == "Y" {
+        PlayerHand.append(BaseDeck.randomElement()!)
+    } else{
+        
+    }
+}
         }
 
     }
