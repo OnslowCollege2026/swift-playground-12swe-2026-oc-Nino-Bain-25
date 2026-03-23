@@ -28,7 +28,6 @@ struct SwiftPlayground {
         var guesses = Array(repeating: Array(repeating: "~", count: size), count: size)
 
         printBoard(guesses)
-        printBoard(ocean)
         // Allow the user to make a certain number of guesses.
         var progress = 1
         var shipsSunk = 0
