@@ -35,19 +35,20 @@ for i in vocabulary {
     var answerOrder: [String] = []
     //The possible answers the question could give the player
     var possibleAnswers: [String] = i
+    let loopruns: Int = possibleAnswers.count - 1
     possibleAnswers.remove(at: 0)
     
 
 //Adds a random answer from possible answers into the answer order, and then removes that answer from the possible answers.
-for each in i {
-    let randomNumber = Int.random(in: 0...possibleAnswers.count - 1) + 1
+for h in 1...loopruns {
+    let randomNumber = Int.random(in: 0...(possibleAnswers.count - 1))
     print(randomNumber)
-    answerOrder.append(possibleAnswers[randomNumber - 1])
-    possibleAnswers.remove(at: randomNumber - 1)
+    answerOrder.append(possibleAnswers[randomNumber])
+    possibleAnswers.remove(at: randomNumber)
 
 }
  print("What is \(i[0]) in Spanish?")
-print("Which is it: \(answerOrder[0]), \(answerOrder[1]), \(answerOrder[2]), or \(answerOrder[4])")
+print("Which is it: \(answerOrder[0]), \(answerOrder[1]), \(answerOrder[2]), or \(answerOrder[3])")
 
 
 }
