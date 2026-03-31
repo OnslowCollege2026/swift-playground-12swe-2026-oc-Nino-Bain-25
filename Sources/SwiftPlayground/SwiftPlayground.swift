@@ -88,9 +88,12 @@ print("That is correct! Well done.")
 }
 
 }
-
+print (incorrectIndices)
 //Repeats the questions the player failed.
-counter = 0
+var stillWrong = true
+while stillWrong == true {
+if incorrectIndices.count != 0 {
+counter = -1
 for failedQuestions in incorrectIndices {
     print(failedQuestions)
 counter += 1
@@ -98,7 +101,7 @@ counter += 1
     //The order of the answers the question will give the player
     var answerOrder: [String] = []
     //The possible answers the question could give the player
-    var possibleAnswers: [String] = vocabulary[failedQuestions]
+    var possibleAnswers: [String] = vocabulary[failedQuestions - 1]
 
     //The amount of times the upcoming for loop will run (How many possible answers there are)
     let loopruns: Int = possibleAnswers.count - 1
@@ -115,14 +118,16 @@ for _ in 1...loopruns {
 
 }
 //Show the question and present possible answers
-print("What is \(vocabulary[failedQuestions][0]) in Spanish?")
+print("What is \(vocabulary[failedQuestions - 1][0]) in Spanish?")
 print("Which is it: 1.\(answerOrder[0]), 2.\(answerOrder[1]), 3.\(answerOrder[2]), or 4.\(answerOrder[3])")
 if let userInput = readLine(), 
 let userNumber = Int(userInput) {
 
 //Checks if the answer was correct
-if answerCheck(enteredAnswer: userNumber, answerOrder: answerOrder, questionVocab: vocabulary[failedQuestions]) == true {
+if answerCheck(enteredAnswer: userNumber, answerOrder: answerOrder, questionVocab: vocabulary[failedQuestions - 1]) == true {
 print("That is correct! Well done.")
+print(counter)
+incorrectIndices.remove(at:counter)
 } else {
     incorrectIndices.append(counter)
 }
@@ -131,11 +136,12 @@ print("That is correct! Well done.")
     //Marks the question as "Wrong" if the user's input is invalid.
     print("Invalid answer. Please try again")
     incorrectIndices.append(counter)
+    
 }
 
 }
-
-
+}
+else {stillWrong = false}
 
 
 
@@ -144,4 +150,4 @@ print("That is correct! Well done.")
 
 
 }
-}
+}}
