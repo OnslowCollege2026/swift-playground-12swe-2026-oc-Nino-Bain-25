@@ -13,7 +13,7 @@ print("4 Close program")
 func sellKumara(kumaraStock: Double, kumaraWeight: Double) -> Int {
 print("How many kumaras is being bought? (Kumaras are 100g each, $3 per Kumara)")
 if let userInput = readLine(), let userNumber = Int(userInput) {
-guard userNumber > 0 && Double(userNumber) <= kumaraStock else {
+guard userNumber > 0 && Double(userNumber) * 0.1 <= kumaraStock else {
 print("Sold \(userNumber) kumara.")
 return userNumber
 }
@@ -49,8 +49,11 @@ printMenu()
 if let userInput = readLine(), 
     let userNumber = Int(userInput) {
 if userNumber == 1 {
-let numberCheck = sellKumara(kumaraStock: kumaraStock, )
+let numberCheck = sellKumara(kumaraStock: kumaraStock, kumaraWeight: kumaraWeight )
+if numberCheck != 0 {
+kumaraStock = kumaraStock - (Double(numberCheck) * 0.1)
 
+}
 
 }
 else if userNumber == 2 {}
