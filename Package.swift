@@ -16,12 +16,72 @@ let package = Package(
         ),
     ]
 )
-// Hello again
-print ("hello world") 
-let roomLength = 6.0
-let roomWidth = 4.5
-let roomHeight = 2.7
-let TechArea = (roomLength) * (roomWidth)
-print ("The room is \(TechArea)m2")
-print("The room is also \(TechArea * roomHeight)m3")
-print ("How big is your room?")
+import Foundation
+
+
+
+
+///Prints the menu of options the user will be first presented with.
+func printMenu() {
+print("Welcome user, to the kumara shop!")
+print("---------------------------------")
+print("Please select an option:")
+print("1. Make kumara sale")
+print("2. Check remaining Stock")
+print("3. Summary of sales")
+print("4 Close program")
+
+
+}
+
+@main
+struct SwiftPlayground {
+    static func main() throws {
+
+//Constants and variables
+var kumaraStock = 12.0
+let kumaraPrice = 3.0
+let kumaraWeight = 0.1
+let bagPrice = 0.5
+var totalSales = 0
+var kumaraSalesWeight: [Int] = []
+var kumaraSalesBags: [Int] = []
+
+//The variable that keeps the while loop running
+var programRunning = true
+
+while programRunning {
+printMenu()
+if let userInput = readLine(), 
+    let userNumber = Int(userInput) {
+if userNumber == 1 {}
+else if userNumber == 2 {}
+else if userNumber == 3 {}
+else if userNumber == 4 {
+    programRunning = false
+    print("Goodbye!")
+}
+else {
+    print("Invalid Number, please try again.")
+}
+
+
+
+
+    } 
+    else {print("Invalid option")}
+
+}
+
+
+}
+
+
+
+
+
+
+
+
+
+    }
