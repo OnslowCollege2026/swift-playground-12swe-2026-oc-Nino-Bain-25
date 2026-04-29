@@ -7,7 +7,8 @@ print("Please select an option:")
 print("1. Make kumara sale")
 print("2. Check remaining Stock")
 print("3. Summary of sales")
-print("4 Close program")
+print("4. Close program")
+print("5. Wipe sales history")
 }
 
 ///Asks the user how much kumara they are purchasing, and returns the number if the amount of kumara is valid
@@ -16,7 +17,7 @@ print("4 Close program")
 /// KumaraPrice: The price of kumara per kg
 /// KumaraStock: The amount of kumaras we have in stock
 func sellKumara(kumaraStock: Double, kumaraWeight: Double, kumaraPrice: Double) -> Int {
-print("How many kumaras is being bought? (Kumaras are 100g each, $3 per Kumara)")
+print("How many kumaras is being bought? (Kumaras are 100g each, $3 per kg)")
 if let userInput = readLine(), let userNumber = Int(userInput) {
 guard userNumber < 1 || Double(userNumber) * kumaraWeight >= kumaraStock + 1 else {
 
@@ -33,14 +34,14 @@ return 0
 /// Parametres: 
 /// KumaraBeingBought: How much kumara that is being bought
 /// BagCapacity: How much kumara each bag can hold
-func bagSales(kumaraBeingBought: Int, BagCapacity: Double) -> Int {
+func bagSales(kumaraBeingBought: Int, BagCapacity: Double, BagStock: Int) -> Int {
     print("How many bags are you buying? You must buy at least one bag, or more per extra kilogram of kumara")
     var bagRecommendation = 0
 
     //Not my best work with this recommendation system, pls let me know in the future how this might be done better. Still functional thought.
-    if kumaraBeingBought < 50 {
+    if Double(kumaraBeingBought) <= (BagCapacity / 100.0) {
     bagRecommendation = 1
-    } else if kumaraBeingBought < 100 {
+    } else if Double(kumaraBeingBought) <= (BagCapacity / 100.0 * 2.0) {
         bagRecommendation = 2
     } else {
         bagRecommendation = 3
@@ -49,7 +50,10 @@ func bagSales(kumaraBeingBought: Int, BagCapacity: Double) -> Int {
 print("Recommended amount of bags: \(bagRecommendation)")
 if let userInput = readLine(), let userNumber = Int(userInput) {
 guard userNumber < bagRecommendation else {
-return userNumber
+    guard userNumber > BagStock else {
+return userNumber}
+print("Too many bags bro!")
+return 0
 }
 print("Please make sure you get enough bags to hold your kumara.")
 return 0
@@ -63,7 +67,7 @@ return 0
 /// Parametres:
 /// kumaraStock: The amount of kumara left in stock
 /// kumaraWeight: the amount each kumara weighs.
-func stockCheck(kumaraStock: Double, kumaraWeight: Double) {
+func stockCheck(kumaraStock: Double, kumaraWeight: Double, BagStock: Int) {
 if kumaraStock > 0 {
 print("In the stock, there are \(kumaraStock / 1000) kilograms of kumara.")
 if kumaraStock == 100 {
@@ -77,7 +81,7 @@ else {
     //In the event the stock is completely out of kumara.
     print("There is no kumara left in Stock.")
 }
-
+print("There are \(BagStock) bags left in stock as well.")
 }
 
 
@@ -116,21 +120,21 @@ totalBags = totalBags + KumaraSalesBags[number - 1]
 print("------------")
 print("Final stats:")
 print("Total earnings: $\(totalPriced)")
-print("Total kumara sold: \(totalWeight * 0.001)kg, or \(totalWeight / kumaraWeight) kumaras")
+print("Total kumara sold: \(totalWeight)kg, or \(totalWeight / kumaraWeight) kumaras")
 print("Total bags sold: \(totalBags)")
 print("Average kumara per bag: \((totalWeight * 0.01) / Double(totalBags))")
 }
 else {
 
     print("You haven't sold anything yet.")
-}
+}}
 
 
 
 
-}
 
-///WORK ON THE OTHER PARTS OF THE PROGRAM, THE OTHER MENU OPTIONS
+
+
 
 @main
 struct SwiftPlayground {
@@ -139,14 +143,25 @@ struct SwiftPlayground {
 //Constants and variables
 /*Due to a weird issue where values would add an extremely small decimal value to calculations, 
 all the measurements here are in grams, which corrects it for some reason. */
+//12000.0 is 120 individual kumara
 var kumaraStock = 12000.0
+
+//Kumara is 3$ per kg, so $0.003 per gram
 let kumaraPrice = 0.003
+//Kumara are 100g. These variables are all in grams
 let kumaraWeight = 100.0
+//Bags are 50c each.
 let bagPrice = 0.5
+//Keeps track of the total sales made.
 var totalSales = 0
+//Keeps track of the amount of kumara sold in total
 var kumaraSalesWeight: [Double] = []
+//Keeps track of the amount of bags per sale
 var kumaraSalesBags: [Int] = []
+//The maximum amount a bag can carry.
 let BagCapacity = 5000.0
+//BagStock
+var BagStock = 5000
 
 //The variable that keeps the while loop running
 var programRunning = true
@@ -161,7 +176,7 @@ if userNumber == 1 {
 let numberCheck = sellKumara(kumaraStock: kumaraStock, kumaraWeight: kumaraWeight, kumaraPrice: kumaraPrice )
 if numberCheck != 0 {
     print("Selling \(numberCheck) kumaras.")
-    let bagAmount = bagSales(kumaraBeingBought: numberCheck, BagCapacity: BagCapacity)
+    let bagAmount = bagSales(kumaraBeingBought: numberCheck, BagCapacity: BagCapacity, BagStock: BagStock)
 
     if bagAmount > 0 {
 
@@ -175,6 +190,10 @@ kumaraSalesWeight.append(Double(numberCheck) * kumaraWeight)
 //And the amount of bags we sold in this sale gets updated as well.
 kumaraSalesBags.append(bagAmount)
 
+//Subtracts from the bags in stock I guess?
+BagStock = BagStock - bagAmount
+
+
 //Also increases the amount of total sales that have been made
 totalSales = totalSales + 1
 
@@ -187,7 +206,7 @@ print("Total money made: $\((Double(numberCheck) * kumaraWeight * kumaraPrice) +
 
 }
 //Option to check how much kumara is in stock if user presses 2
-else if userNumber == 2 {stockCheck(kumaraStock: kumaraStock, kumaraWeight: kumaraWeight)}
+else if userNumber == 2 {stockCheck(kumaraStock: kumaraStock, kumaraWeight: kumaraWeight, BagStock: BagStock)}
 
 
 //Option to show the sale history, as well as the average kumara amount in each bag, and total stats.
@@ -195,6 +214,7 @@ else if userNumber == 3 {
 //TOTALITY
     totality(kumaraSalesWeight: kumaraSalesWeight, KumaraSalesBags: kumaraSalesBags,TotalSales: totalSales, 
     kumaraWeight: kumaraWeight, kumaraPrice: kumaraPrice, bagPrice: bagPrice)
+    print("That is all.")
 }
 
 
@@ -203,6 +223,18 @@ else if userNumber == 4 {
     programRunning = false
     print("Goodbye!")
 }
+
+//Option here to reset sales if someone wants to do that. 
+//Resets the sales counter, the items in the arrays, and resets the stock to 12kg as well.
+else if userNumber == 5{
+print("Reset Sales.")
+kumaraSalesWeight = []
+kumaraSalesBags = []
+totalSales = 0
+kumaraStock = 12000.0
+BagStock = 5000
+}
+
 else {
     print("Invalid Number, please try again.")
 }
